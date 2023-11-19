@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ExampleController;
+use App\Http\Controllers\CarController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,9 +15,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+Route::get('/', function () {
+    return view('welcome');
+});
 Route::get('test', function () {
     return " Welcome to my first route";
 });
@@ -27,8 +29,6 @@ Route::get('user/{name}/{age?}', function ($name, $age = null) {
         return "The UserName is : " . $name;
     }
 })->whereIn('name',['perla','merna']);
-
-
 Route::prefix('products')->group(function(){
     Route::get('/',function(){
     return 'products page';
@@ -40,17 +40,14 @@ Route::prefix('products')->group(function(){
     return 'camera product page';
     });
 });
-
 // About
 Route::get('/about', function () {
     return 'About Us';
 });
-
 // Contact Us
 Route::get('/contact-us', function () {
     return 'Contact Us';
 });
-
 // Support
 Route::prefix('support')->group(function () {
     // Chat
@@ -68,7 +65,6 @@ Route::prefix('support')->group(function () {
         return 'Ticket Support';
     });
 });
-
 // Training
 Route::prefix('training')->group(function () {
     // HR
@@ -92,3 +88,24 @@ Route::prefix('training')->group(function () {
     });
 });
 
+Route :: fallback(function(){
+    return redirect('/');
+});
+
+Route::get('cv', function () {
+    return  view('cv');
+});
+
+Route::get('login', function () {
+    return  view('login');
+});
+
+Route::post('receive', function () {
+    return  "data received";
+}) ->name('receive');
+
+Route::get('test1',[ExampleController::class,'test1']);
+
+Route::get('/add-car', [CarController::class, 'showForm'])->name('add-car-form');
+Route::post('/add-car', [CarController::class, 'addCar'])->name('add-car');
+Route::get('/show-car', [CarController::class, 'showCar'])->name('show-car');
