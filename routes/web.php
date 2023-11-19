@@ -17,7 +17,11 @@ use App\Http\Controllers\CarController;
 
 Route::get('/', function () {
     return view('welcome');
+<<<<<<< HEAD
 });
+=======
+ });
+>>>>>>> f42ba7ca044cd07cdd82beb081380078b8cb4c13
 Route::get('test', function () {
     return " Welcome to my first route";
 });
