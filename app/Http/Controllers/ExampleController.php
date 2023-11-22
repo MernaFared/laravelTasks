@@ -10,4 +10,6 @@ public function test1(){    // test1 -> method's name
     return view("login");
 }
 
+
+
 }

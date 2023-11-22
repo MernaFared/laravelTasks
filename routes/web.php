@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ExampleController;
 use App\Http\Controllers\CarController;
+use App\Http\Controllers\NewsController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -17,11 +19,7 @@ use App\Http\Controllers\CarController;
 
 Route::get('/', function () {
     return view('welcome');
-<<<<<<< HEAD
 });
-=======
- });
->>>>>>> f42ba7ca044cd07cdd82beb081380078b8cb4c13
 Route::get('test', function () {
     return " Welcome to my first route";
 });
@@ -104,12 +102,28 @@ Route::get('login', function () {
     return  view('login');
 });
 
-Route::post('receive', function () {
-    return  "data received";
-}) ->name('receive');
+// Route::post('receive', function () {
+//     return  "data received";
+// }) ->name('receive');
 
 Route::get('test1',[ExampleController::class,'test1']);
 
-Route::get('/add-car', [CarController::class, 'showForm'])->name('add-car-form');
-Route::post('/add-car', [CarController::class, 'addCar'])->name('add-car');
-Route::get('/show-car', [CarController::class, 'showCar'])->name('show-car');
+Route::get('addCar', [carController::class, 'storeCarData']);
+Route::post('receive', [carController::class, 'showCarData'])->name('receive');
+
+ 
+
+Route::post('addNews', [NewsController::class, 'store'])->name('addNews');
+
+Route::get('showNews', [NewsController::class, 'create']);
+
+
+
+
+
+
+
+
+
+ 
+
