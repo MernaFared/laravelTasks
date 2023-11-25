@@ -7,17 +7,38 @@ use App\Models\Car;
 
 class CarController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        $cars=Car ::get();
+        return view('cars',compact('cars'));
+        //
+    }
 
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
     public function store(Request $request)
     {
-        $car = new Car;
-        $car->carTitle = $request->input('carTitle');
-        //$car->price = $request->input('price');
-        $car->description = $request->input('description');
-        $car->published = $request->has('published');  
-
-        $car->save();
-
+        $cars = new Car;
+        $cars->carTitle = $request->carTitle;
+        $cars->description = $request->description;
+        if(isset($request->published)){
+            $cars->published = true;
+        }else{
+            $cars->published = false;
+        }
+        $cars->save();
         return "Car data added successfully";
     }
     public function storeCarData(){
@@ -30,32 +51,38 @@ class CarController extends Controller
         return $msg;
     }
 
-    // public function store(Request $request)
-    // {
-    //     $cars = new Car;
-    //     $cars->carTitle = "BMW";
-    //     $cars->description = "My Description is here";
-    //     $cars->published = true;
-    //     $cars->save();
-    //     return "Car data added successfully";
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        //
+    }
 
-    // }
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
+    {
+        //
+        $car = Car::findOrFail(  $id);
+        return view('updateCar',compact('car'));
+    }
 
-    // public function showForm()
-    // {
-    //     return view('add-car-form');
-    // }
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
+    {
+         
+    }
 
-    // public function addCar(Request $request)
-    // {
-    //     $data = $request->all();
-    //     return redirect()->route('show-car')->with('data', $data);
-    // }
-    
-
-    // public function showCar()
-    // {
-    //     $data = session('data');
-    //     return view('show-car', compact('data'));
-    // }
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        //
+    }
 }
+

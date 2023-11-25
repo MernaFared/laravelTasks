@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ExampleController;
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\NewsController;
-
+use App\Models\News;
 
 /*
 |--------------------------------------------------------------------------
@@ -90,9 +90,9 @@ Route::prefix('training')->group(function () {
     });
 });
 
-Route :: fallback(function(){
-    return redirect('/');
-});
+// Route :: fallback(function(){
+//     return redirect('/');
+// });
 
 Route::get('cv', function () {
     return  view('cv');
@@ -108,14 +108,26 @@ Route::get('login', function () {
 
 Route::get('test1',[ExampleController::class,'test1']);
 
-Route::get('addCar', [carController::class, 'storeCarData']);
-Route::post('receive', [carController::class, 'showCarData'])->name('receive');
+Route::get('addCar', [CarController::class, 'storeCarData']);
+Route::post('receive', [CarController::class, 'store'])->name('receive');
+Route::get('showcars', [CarController::class, 'index']);
 
- 
+//edit car form 
+Route::get('editCar/{id}', [CarController::class, 'edit']);
+Route::put('updateCar/{id}', [CarController::class, 'update'])->name('updateCar'); 
 
-Route::post('addNews', [NewsController::class, 'store'])->name('addNews');
+// add news
+Route::post('addNews', [NewsController::class, 'store'])->name('addNews');   
+Route::get('newsForm', [NewsController::class, 'create']); //route for form of news 
 
-Route::get('showNews', [NewsController::class, 'create']);
+// route of displaying news data
+Route::get('showNews',[NewsController::class, 'index']);
+
+// edit and update news
+Route::get('editNews/{id}', [NewsController::class, 'edit']);
+
+Route::put('updateNews/{id}', [NewsController::class, 'update'])->name('updateNews'); 
+
 
 
 

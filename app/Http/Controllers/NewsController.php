@@ -13,8 +13,9 @@ class NewsController extends Controller
      */
     public function index()
     {
-        // $news = News::get();
-        // return view('add-news-form');
+        $news =News ::get();
+
+        return view('news',compact('news'));
     }
 
     /**
@@ -34,6 +35,7 @@ class NewsController extends Controller
         $news = new News();
         $news->Title = $request->Title;
         $news->content = $request->content;
+        $news->author = $request->author;
         $published =$request->published;
         if($published){
             $news->published=true;
@@ -41,7 +43,7 @@ class NewsController extends Controller
         else{
             $news->published=false;
         }
-        $news->author = $request->author;
+         
 
         $news->save();
         return "news data added successfully";
@@ -67,6 +69,8 @@ class NewsController extends Controller
      */
     public function edit(string $id)
     {
+        $news = News::findOrFail( $id);
+        return view('updateNews',compact('news'));
         //
     }
 

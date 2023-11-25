@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+{{-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <title>Show Car Data</title>
@@ -12,4 +12,4 @@
         <p>Published: {{ isset($data['remember']) ? 'Yes' : 'No' }}</p>
     </div>
 </body>
-</html>
+</html> --}}
