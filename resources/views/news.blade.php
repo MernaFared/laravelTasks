@@ -20,7 +20,10 @@
         <th>Content</th>
         <th>Author</th>
         <th>Published</th>
+        <th>Details</th>
         <th>Edit</th>
+        <th>Delete</th>
+
 
       </tr>
     </thead>
@@ -37,7 +40,10 @@
         <td > No
         @endif
       </td>
+      <td><a href="newsDetails/{{$newss->id}}">Show</a></td>
         <td><a href="editNews/{{$newss->id}}">Edit</a></td>
+        <td><a href="deleteNews/{{$newss->id}}">Delete</a></td>
+
        </tr>
 @endforeach
        

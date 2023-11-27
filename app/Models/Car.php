@@ -7,7 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Car extends Model
 {
-    protected $fillable = ['carTitle', 'description', 'published'];
-
+ 
     use HasFactory;
+    protected $fillable= [
+        'carTitle',
+        'description',
+         
+
+    ];
 }

@@ -18,10 +18,10 @@
       <label for="title">Title:</label>
       <input type="text" class="form-control" id="title" placeholder="Enter title" name="carTitle">
     </div>
-    <div class="form-group">
+    {{-- <div class="form-group">
       <label for="price">Price:</label>
       <input type="number" class="form-control" id="price" placeholder="Enter Price" name="price">
-    </div>
+    </div> --}}
     <div class="form-group">
         <label for="description">Description:</label>
         <textarea class="form-control" rows="5" id="description" name="description"></textarea>

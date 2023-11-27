@@ -107,7 +107,7 @@ Route::get('login', function () {
 // }) ->name('receive');
 
 Route::get('test1',[ExampleController::class,'test1']);
-
+// add car
 Route::get('addCar', [CarController::class, 'storeCarData']);
 Route::post('receive', [CarController::class, 'store'])->name('receive');
 Route::get('showcars', [CarController::class, 'index']);
@@ -116,21 +116,31 @@ Route::get('showcars', [CarController::class, 'index']);
 Route::get('editCar/{id}', [CarController::class, 'edit']);
 Route::put('updateCar/{id}', [CarController::class, 'update'])->name('updateCar'); 
 
-// add news
-Route::post('addNews', [NewsController::class, 'store'])->name('addNews');   
-Route::get('newsForm', [NewsController::class, 'create']); //route for form of news 
+// show CarDetails
+Route::get('carDetails/{id}', [CarController::class, 'show']);
+ // Delete car
+Route::get('deleteCar/{id}', [CarController::class, 'destroy']); 
 
+//////////////////////////////////////// News ///////////////////////////////////////////////
+
+
+// add news
+Route::get('newsForm', [NewsController::class, 'create']); //route for form of news
+Route::post('addNews', [NewsController::class, 'store'])->name('addNews');   
+ 
 // route of displaying news data
 Route::get('showNews',[NewsController::class, 'index']);
 
 // edit and update news
 Route::get('editNews/{id}', [NewsController::class, 'edit']);
-
 Route::put('updateNews/{id}', [NewsController::class, 'update'])->name('updateNews'); 
 
+// delete news
+Route::get('deleteNews/{id}', [NewsController::class, 'destroy']); 
 
-
-
+// show newsDetails
+Route::get('newsDetails/{id}', [NewsController::class, 'show']);
+ 
 
 
 

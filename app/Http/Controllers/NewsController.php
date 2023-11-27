@@ -8,6 +8,7 @@ use GuzzleHttp\Client;
 
 class NewsController extends Controller
 {
+    private $columns = ['Title','content','author','published'];
     /**
      * Display a listing of the resource.
      */
@@ -48,12 +49,6 @@ class NewsController extends Controller
         $news->save();
         return "news data added successfully";
 
-
-
-
-
-
-
     }
 
     /**
@@ -61,6 +56,8 @@ class NewsController extends Controller
      */
     public function show(string $id)
     {
+        $news = News ::findOrFail($id);
+        return view('newsDetails',compact('news'));
         //
     }
 
@@ -79,7 +76,13 @@ class NewsController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $data = $request->only($this->columns);
+        $data['published'] = isset($data['published'])? true:false;
+
+        News::where('id', $id)->update($data);
+
+      
+         return "Data Updated Successfully";
     }
 
     /**
@@ -87,6 +90,7 @@ class NewsController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        news::where('id',$id)->delete();
+        return 'Data Deleted Successfully';
     }
 }
