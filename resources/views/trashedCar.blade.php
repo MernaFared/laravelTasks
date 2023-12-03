@@ -11,7 +11,7 @@
 <body>
 
 <div class="container">
-  <h2>Cars List</h2>
+  <h2> Deleted Cars </h2>
               
   <table class="table table-hover">
     <thead>
@@ -19,9 +19,9 @@
         <th>Title</th>
         <th>Content</th>
         <th>Published</th>
-         <th>Details</th>
-        <th>Edit</th>
-        <th>Delete</th>
+         <th>Restore</th>
+         <th>force Delete</th>
+
  
 
 
@@ -38,9 +38,8 @@
         <td > No
         @endif
       </td>    
-        <td><a href="carDetails/{{$car->id}}">Show</a></td>
-        <td><a href="editCar/{{$car->id}}">Edit</a></td>
-        <td><a href="deleteCar/{{$car->id}}">Delete</a></td>
+        <td><a href="restoreCar/{{$car->id}}">Restore</a></td>
+        <td><a href="delete/{{$car->id}}">force Delete</a></td>
 
     
 
