@@ -6,9 +6,12 @@ use Illuminate\Http\Request;
 use App\Models\News;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Redirect;
+use App\Traits\Common;
 
 class NewsController extends Controller
 {
+    use Common;
+
     private $columns = ['Title','content','author','published'];
     /**
      * Display a listing of the resource.
@@ -34,40 +37,41 @@ class NewsController extends Controller
      */
     public function store(Request $request)
     {
-        // $news = new News();
-        // $news->Title = $request->Title;
-        // $news->content = $request->content;
-        // $news->author = $request->author;
-        // $published =$request->published;
-        // if($published){
-        //     $news->published=true;
-        // }
-        // else{
-        //     $news->published=false;
-        // }
-         
-
-        // $news->save();
-        // return "news data added successfully";
-
-        $request->validate([
-            'Title'=>'required|string',
-            'content'=>'required|string|max:100',
-            'author'=>'required|string|max:100',
-
-            
-        ]);
        
-        $data = $request->only($this->columns);
-        $data['published'] = isset($data['published'])? true : false;
-        News:: create($data);
-        return 'done' ;
+         $messages=[
+            'title.required'=> 'Title is required',
+            'content.required'=> 'Should be Text',
+            'author.required'=> 'Should be Text',
+            
+         ];
+       $data =  $request->validate([
+            'title'=>'required|string',
+            'content'=>'required|string|max:100',
+            'author'=>'required|string|max:100',  
+            'image' => 'required|mimes:png,jpg,jpeg|max:2048',
+        ],$messages);
+        $fileName = $this->uploadFile($request->image, 'assets/images');
+        $data['image']= $fileName;
+         $data['published'] = isset($request['published']) ;
+         News:: create($data);
+         return 'done' ;
 
     }
 
     /**
      * Display the specified resource.
      */
+    public function showUpload( )
+    {
+       return view('uploadNews');
+        //
+    }
+    public function upload(Request $request){
+        $fileName = $this->uploadFile($request->image, 'assets/images');
+        return $fileName;
+ 
+
+    }
     public function show(string $id)
     {
         $news = News ::findOrFail($id);

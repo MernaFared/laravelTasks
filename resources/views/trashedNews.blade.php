@@ -23,8 +23,6 @@
          <th>Restore</th>
          <th>force Delete</th>
 
- 
-
 
       </tr>
     </thead>

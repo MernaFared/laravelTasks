@@ -7,6 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class News extends Model
 {
-    protected $fillable = ['Title', 'content', 'published','author'];
+    protected $fillable = ['Title', 'content', 'published','author','image'];
     use HasFactory,SoftDeletes;
 }

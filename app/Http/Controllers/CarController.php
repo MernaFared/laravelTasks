@@ -5,10 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Car;
 use PhpParser\Node\Expr\Cast\String_;
-
+use App\Traits\Common;
 class CarController extends Controller
 {
-
+   use Common;
     private $columns = ['carTitle','description','published'];
     /**
      * Display a listing of the resource.
@@ -33,24 +33,21 @@ class CarController extends Controller
      */
     public function store(Request $request)
     {
-        // $cars = new Car;
-        // $cars->carTitle = $request->carTitle;
-        // $cars->description = $request->description;
-        // if(isset($request->published)){
-        //     $cars->published = true;
-        // }else{
-        //     $cars->published = false;
-        // }
-        // $cars->save();
-        // return "Car data added successfully";
-        $request->validate([
+        $messages=[
+            'carTitle.required'=>'Title is required',
+            'description.required'=> 'should be text',
+        ];
+
+        $data = $request->validate([
             'carTitle'=>'required|string',
-            'description'=>'required|string|max:100',
-            
-            
-        ]);
+            'description'=>'required|string',
+            'image' => 'required|mimes:png,jpg,jpeg|max:2048',
+        ], $messages);
+        
        
-        $data = $request->only($this->columns);
+        // $data = $request->only($this->columns);
+        $fileName = $this->uploadFile($request->image, 'assets/images');
+        $data['image']= $fileName;
         $data['published'] = isset($data['published'])? true : false;
         Car:: create($data);
         return 'done' ;
@@ -69,6 +66,21 @@ class CarController extends Controller
     /**
      * Display the specified resource.
      */
+    public function showUpload( )
+    {
+       return view('uploadCar');
+        //
+    }
+
+
+    
+    public function upload(Request $request){
+        
+         $fileName = $this->uploadFile($request->image, 'assets/images');
+        return $fileName;
+ 
+    }
+
     public function show(string $id)
     {
         $car = Car ::findOrFail($id);
@@ -91,15 +103,26 @@ class CarController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $data = $request->only($this->columns);
-        $data['published'] = isset($data['published'])? true:false;
 
+        $data = $request->validate([
+            'carTitle' => 'required|string',
+            'description' => 'required|string',
+            'image' => 'nullable|mimes:png,jpg,jpeg|max:2048'
+             
+        ]);
+    
+        // Upload the new image if provided
+        if ($request->hasFile('image')) {
+            $fileName = $this->uploadFile($request->file('image'), 'assets/images');
+            $data['image'] = $fileName;
+        }
+    
+        // Modify other data as needed
+    
         Car::where('id', $id)->update($data);
-
-      
-     
+    
         return "Data Updated Successfully";
-   
+    
 
     }
 

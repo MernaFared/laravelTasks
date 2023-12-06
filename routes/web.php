@@ -127,7 +127,15 @@ Route ::get('trashedCar',[CarController::class,'trashed']);
 Route ::get('restoreCar/{id}',[CarController::class,'restore']);
  // force Delete car
  Route::get('delete/{id}', [CarController::class, 'delete']); 
-//////////////////////////////////////// News ///////////////////////////////////////////////
+
+// show upload Car-image
+Route::get('showUploadCar',[CarController::class,'showUpload']);
+
+Route::post('uploadCar', [CarController::class, 'upload'])->name('upload');   
+
+
+
+ //////////////////////////////////////// News ///////////////////////////////////////////////
 
 
 // add news
@@ -157,9 +165,12 @@ Route ::get('trashedNews',[NewsController::class,'trashed']);
 Route ::get('restoreNews/{id}',[NewsController::class,'restore']);
 
 
-// force Delete car
+// force Delete news
   Route::get('deleteForceNews/{id}', [NewsController::class, 'delete']); 
 
+// show upload News-image
+  Route::get('showUploadNews',[CarController::class,'showUploadNews']) ;
 
+Route::post('uploadNews', [NewsController::class, 'upload'])->name('upload');   
  
 
