@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ExampleController;
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\NewsController;
+use App\Http\Controllers\ExploreItemController;
+
 use App\Models\News;
 
 /*
@@ -102,11 +104,23 @@ Route::get('login', function () {
     return  view('login');
 });
 
+// Route::get('place', function () {
+//     return  view('place');
+// });
+
+
+
 // Route::post('receive', function () {
 //     return  "data received";
 // }) ->name('receive');
 
 Route::get('test1',[ExampleController::class,'test1']);
+
+Route::get('blog',[ExampleController::class,'blog']);
+Route::get('blog1',[ExampleController::class,'blog1']);
+
+
+
 // add car
 Route::get('addCar', [CarController::class, 'storeCarData']);
 Route::post('receive', [CarController::class, 'store'])->name('receive');
@@ -174,3 +188,8 @@ Route ::get('restoreNews/{id}',[NewsController::class,'restore']);
 Route::post('uploadNews', [NewsController::class, 'upload'])->name('upload');   
  
 
+//Route::get('/explore', [ExploreItemController::class, 'index']);
+Route::get('/createPlaces', [ExploreItemController::class, 'create']);
+Route::post('/explore', [ExploreItemController::class, 'store']);
+Route::get('/place', [ExploreItemController::class, 'index']); // show dataof places
+ 

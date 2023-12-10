@@ -26,11 +26,21 @@
     <div class="form-group">
         <label for="description">Description:</label>
         <textarea class="form-control" rows="5" id="description" name="description" >{{$car->description}}</textarea>
-    </div> 
+        @error('carTitle')
+        <div class="alert alert-warning">
+            {{ $message }}
+        </div>
+        @enderror
+      </div> 
     <div class="form-group">
       <label for="image">Image:</label>
       <input type="file" class="form-control" id="image" name="image">
-  </div>
+      @error('image')
+      <div class="alert alert-warning">
+          {{ $message }}
+      </div>
+      @enderror
+    </div>
     <div class="checkbox">
       <label><input type="checkbox" name="published" @checked($car->published)> Published </label>
     </div>

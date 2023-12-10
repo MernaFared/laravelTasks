@@ -33,10 +33,7 @@ class CarController extends Controller
      */
     public function store(Request $request)
     {
-        $messages=[
-            'carTitle.required'=>'Title is required',
-            'description.required'=> 'should be text',
-        ];
+        $messages=$this->messages();
 
         $data = $request->validate([
             'carTitle'=>'required|string',
@@ -103,26 +100,25 @@ class CarController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $messages= $this->messages();
 
         $data = $request->validate([
-            'carTitle' => 'required|string',
-            'description' => 'required|string',
-            'image' => 'nullable|mimes:png,jpg,jpeg|max:2048'
-             
-        ]);
-    
-        // Upload the new image if provided
-        if ($request->hasFile('image')) {
-            $fileName = $this->uploadFile($request->file('image'), 'assets/images');
-            $data['image'] = $fileName;
+            'carTitle'=>'required|string',
+            'description'=>'required|string',
+            'image' => 'sometimes|mimes:png,jpg,jpeg|max:2048',
+        ], $messages);
+       
+        $data['published'] = isset($request->published);
+
+        // update image if new file selected
+        if($request->hasFile('image')){
+            $fileName = $this->uploadFile($request->image, 'assets/images');
+            $data['image']= $fileName;
         }
-    
-        // Modify other data as needed
-    
+
+        //return dd($data);
         Car::where('id', $id)->update($data);
-    
-        return "Data Updated Successfully";
-    
+        return 'Updated';
 
     }
 
@@ -154,6 +150,14 @@ class CarController extends Controller
     {
         Car::where('id',$id)->restore();
         return redirect('showcars');
+    }
+
+
+    public function messages(){
+        return [
+            'carTitle.required'=>'Title is required',
+            'description.required'=> 'should be text',
+        ];
     }
 }
 

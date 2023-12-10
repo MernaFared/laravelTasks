@@ -9,7 +9,13 @@ use Illuminate\Http\Request;
 public function test1(){    // test1 -> method's name
     return view("login");
 }
+public function blog(){     
+    return view("blog");
+}
 
+public function blog1(){     
+    return view("blog1");
+}
 
 
 }
