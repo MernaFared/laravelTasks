@@ -193,3 +193,8 @@ Route::get('/createPlaces', [ExploreItemController::class, 'create']);
 Route::post('/explore', [ExploreItemController::class, 'store']);
 Route::get('/place', [ExploreItemController::class, 'index']); // show dataof places
  
+Route::get('showPlace/{id}', [ExploreItemController::class, 'show'])->name('showPlace');
+Route::get('deletePlace/{id}', [ExploreItemController::class, 'destroy'])->name('deletePlace');
+Route::get('trashedPlaces', [ExploreItemController::class, 'getTrashed']);
+Route::get('restorePlace/{id}', [ExploreItemController::class, 'restore'])->name('restorePlace');
+Route::get('deleteForce-place/{id}', [ExploreItemController::class, 'deleteforce'])->name('deleteforce');;

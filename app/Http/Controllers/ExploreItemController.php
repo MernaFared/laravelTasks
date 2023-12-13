@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Traits\Common;
-
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Models\ExploreItem;
 
@@ -42,5 +42,27 @@ class ExploreItemController extends Controller
 
        return('done');
      }
-
+     public function destroy(string $id)
+     {
+        ExploreItem::where('id', $id)->delete();
+         return redirect('place');
+     }
+ 
+     public function getTrashed()
+     {
+         $trashedPlaces = ExploreItem::onlyTrashed()->get();
+         return view('trashedPlaces', compact('trashedPlace'));
+     }
+ 
+     public function restore(string $id) :RedirectResponse
+     {
+        ExploreItem::where('id', $id)->restore();
+         return redirect('place ');
+     }
+ 
+     public function deleteforce(string $id) :RedirectResponse
+     {
+        ExploreItem::where('id', $id)->forceDelete();;
+         return redirect('place ');
+     }
 }
