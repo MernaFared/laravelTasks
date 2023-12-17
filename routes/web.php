@@ -123,6 +123,8 @@ Route::get('blog1',[ExampleController::class,'blog1']);
 
 // add car
 Route::get('addCar', [CarController::class, 'storeCarData']);
+Route::get('AddCar', [CarController::class, 'create']);
+
 Route::post('receive', [CarController::class, 'store'])->name('receive');
 Route::get('showcars', [CarController::class, 'index']);
 

@@ -55,6 +55,7 @@
         <h1>{{$car->carTitle}}</h1>
         <p>{{$car->description}}</p>
         <p>published: {{$car->published}}</p>
+        <p>category: {{  $car->category->categoryName }}</p>
     </div>
 </body>
 </html>

@@ -18,6 +18,7 @@
       <tr>
         <th>Title</th>
         <th>Content</th>
+        <th>Category</th>
         <th>Published</th>
          <th>Details</th>
         <th>Edit</th>
@@ -32,6 +33,7 @@
       <tr>
         <td>{{$car->carTitle}}</td>
         <td>{{$car->description}}</td>
+        <td>  {{  $car->category->categoryName }} </td>
         @if( $car->published=== 1)
         <td > Yes</td>
         @else

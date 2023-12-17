@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
  use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Models\Car;
+use App\Models\Category;
 use PhpParser\Node\Expr\Cast\String_;
 use App\Traits\Common;
 class CarController extends Controller
@@ -26,6 +27,10 @@ class CarController extends Controller
     public function create()
     {
         //
+
+        $categories =Category::select('id','categoryName')->get();
+       return view('add-car-form',compact('categories'));
+    
     }
 
     /**
@@ -39,6 +44,7 @@ class CarController extends Controller
             'carTitle'=>'required|string',
             'description'=>'required|string',
             'image' => 'required|mimes:png,jpg,jpeg|max:2048',
+            'category_id' => 'required|exists:categories,id',
         ], $messages);
         
        
@@ -46,6 +52,8 @@ class CarController extends Controller
         $fileName = $this->uploadFile($request->image, 'assets/images');
         $data['image']= $fileName;
         $data['published'] = isset($data['published'])? true : false;
+        $data['category_id'] = $request->input('category_id');
+
         Car:: create($data);
         return 'done' ;
    
@@ -90,10 +98,15 @@ class CarController extends Controller
      */
     public function edit(string $id)
     {
-        //
-        $car = Car::findOrFail(  $id);
-        return view('updateCar',compact('car'));
+        $car = Car::findOrFail($id);
+       $categories = Category::select('id', 'categoryName')->get();
+
+    return view('updateCar', compact('car', 'categories'));
     }
+
+
+ 
+
 
     /**
      * Update the specified resource in storage.
@@ -106,11 +119,11 @@ class CarController extends Controller
             'carTitle'=>'required|string',
             'description'=>'required|string',
             'image' => 'sometimes|mimes:png,jpg,jpeg|max:2048',
+            'category_id' => 'required|exists:categories,id',
         ], $messages);
        
         $data['published'] = isset($request->published);
-
-        // update image if new file selected
+         // update image if new file selected
         if($request->hasFile('image')){
             $fileName = $this->uploadFile($request->image, 'assets/images');
             $data['image']= $fileName;

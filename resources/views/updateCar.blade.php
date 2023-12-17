@@ -41,6 +41,16 @@
       </div>
       @enderror
     </div>
+    <select name="category_id" id="category_id">
+      <option value="">Select Category</option>
+      @foreach($categories as $category)
+          <option value="{{$category->id}}" @if($category->id == $car->category_id) selected @endif>
+              {{$category->categoryName}}
+          </option>
+      @endforeach
+  </select>
+  
+  
     <div class="checkbox">
       <label><input type="checkbox" name="published" @checked($car->published)> Published </label>
     </div>
