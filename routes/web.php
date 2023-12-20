@@ -5,6 +5,7 @@ use App\Http\Controllers\ExampleController;
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\ExploreItemController;
+use App\Http\Controllers\ContcatUsController;
 
 use App\Models\News;
 
@@ -200,3 +201,12 @@ Route::get('deletePlace/{id}', [ExploreItemController::class, 'destroy'])->name(
 Route::get('trashedPlaces', [ExploreItemController::class, 'getTrashed']);
 Route::get('restorePlace/{id}', [ExploreItemController::class, 'restore'])->name('restorePlace');
 Route::get('deleteForce-place/{id}', [ExploreItemController::class, 'deleteforce'])->name('deleteforce');;
+Auth::routes(['verify'=>true]);
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+ 
+
+ 
+Route::get('/contact', [ContcatUsController::class, 'create']);
+
+Route::post('/send',[ContcatUsController::class, 'sendEmail'])->name('SendEmail');

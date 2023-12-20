@@ -44,7 +44,7 @@
     <select name="category_id" id="category_id">
       <option value="">Select Category</option>
       @foreach($categories as $category)
-          <option value="{{$category->id}}" @if($category->id == $car->category_id) selected @endif>
+          <option value="{{$category->id}}" @selected( $category->id == $car->category_id)>
               {{$category->categoryName}}
           </option>
       @endforeach
