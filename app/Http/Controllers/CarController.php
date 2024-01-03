@@ -26,11 +26,12 @@ class CarController extends Controller
      */
     public function create()
     {
-        //
+     $categories = Category::select('id', 'categoryName')->get();
 
-        $categories =Category::select('id','categoryName')->get();
-       return view('add-car-form',compact('categories'));
-    
+    // Pass categories to the view
+    return view('add-car-form', compact('categories'));
+
+         
     }
 
     /**
@@ -38,23 +39,47 @@ class CarController extends Controller
      */
     public function store(Request $request)
     {
-        $messages=$this->messages();
+        // $messages=$this->messages();
 
-        $data = $request->validate([
-            'carTitle'=>'required|string',
-            'description'=>'required|string',
-            'image' => 'required|mimes:png,jpg,jpeg|max:2048',
-            'category_id' => 'required|exists:categories,id',
-        ], $messages);
+        // $data = $request->validate([
+        //     'carTitle'=>'required|string',
+        //     'description'=>'required|string',
+        //     'image' => 'required|mimes:png,jpg,jpeg|max:2048',
+        //     'category_id' => 'required|exists:categories,id',
+        // ], $messages);
         
        
-        // $data = $request->only($this->columns);
-        $fileName = $this->uploadFile($request->image, 'assets/images');
-        $data['image']= $fileName;
-        $data['published'] = isset($data['published'])? true : false;
-        $data['category_id'] = $request->input('category_id');
+        // // $data = $request->only($this->columns);
+        // $fileName = $this->uploadFile($request->image, 'assets/images');
+        // $data['image']= $fileName;
+        // $data['published'] = isset($data['published'])? true : false;
+        // $data['category_id'] = $request->input('category_id');
 
-        Car:: create($data);
+        // Car:: create($data);
+
+        $messages = [
+            'title.required'        => __('addCar.titleRequiredMsg'),
+            'description.required'  => __('addCar.descriptionRequiredMsg'),
+            'description.max'       => __('addCar.descriptionMaxMsg'),
+            'image.require'         => __('addCar.imageRequiredMsg'),
+            'image.mimes'           => __('addCar.imageMimesMsg'),
+            'image.max'             => __('addCar.imageSizeMsg'),
+            'category_id.required'  => __('addCar.categoryRequiredMsg'),
+        ];
+
+        $data = $request->validate([
+            'title'         => 'required|string',
+            'description'   => 'required|string|max:500',
+            'image'         => 'required|mimes:png,jpg,jpeg|max:2048',
+            'category_id'   => 'required'
+        ], $messages);
+
+        $fileName = $this->uploadFile(file: $request->image, path: 'assets\images');
+        $data['image'] = $fileName;
+
+        $data['published'] = isset($request['published']);
+
+        Car::create($data);
         return 'done' ;
    
     }

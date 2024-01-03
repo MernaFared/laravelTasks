@@ -16,6 +16,12 @@ public function blog(){
 public function blog1(){     
     return view("blog1");
 }
+public function mySession(){
+   session()->put('test','first laravel session') ;    
+    $data = session('test');
+    //session()->forget('test');
 
+   return view("session",compact('data'));
+}
 
 }

@@ -120,14 +120,24 @@ Route::get('test1',[ExampleController::class,'test1']);
 Route::get('blog',[ExampleController::class,'blog']);
 Route::get('blog1',[ExampleController::class,'blog1']);
 
+Route::get('/session',[ExampleController::class,'mySession']);
 
 
 // add car
-Route::get('addCar', [CarController::class, 'storeCarData']);
-Route::get('AddCar', [CarController::class, 'create']);
+
+Route::group([
+    'prefix' => LaravelLocalization::setLocale(),
+    'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ]
+], function() {
+    
+
+    Route::get('addCar', [CarController::class, 'storeCarData']);
+    Route::get('AddCar', [CarController::class, 'create']);
+    
+});
 
 Route::post('receive', [CarController::class, 'store'])->name('receive');
-Route::get('showcars', [CarController::class, 'index']);
+Route::get('showcars', [CarController::class, 'index'])->middleware('verified');
 
 //edit car form 
 Route::get('editCar/{id}', [CarController::class, 'edit']);
@@ -210,3 +220,12 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/contact', [ContcatUsController::class, 'create']);
 
 Route::post('/send',[ContcatUsController::class, 'sendEmail'])->name('SendEmail');
+
+// Example route in web.php
+Route::group(['middleware' => 'auth.car'], function () {
+    Route::get('cars/create', 'CarController@create');
+    Route::post('cars', 'CarController@store');
+    Route::get('cars/{id}/edit', 'CarController@edit');
+    Route::put('cars/{id}', 'CarController@update');
+    Route::delete('cars/{id}', 'CarController@destroy');
+});
